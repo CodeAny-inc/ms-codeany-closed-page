@@ -1,37 +1,449 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Codeany Technical Service Closure</title>
+    <title>CodeAny — Texniki Xidmət</title>
     <style>
+        @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
+
+        :root {
+            --ca-purple:      #6f4dff;
+            --ca-purple-soft: #f0edff;
+            --ca-white:       #ffffff;
+            --ca-ink:         #19172b;
+            --ca-muted:       #645f7e;
+            --ca-border:      #e4dfff;
+            --ca-shadow:      0 16px 48px rgba(44, 28, 124, 0.10);
+            --radius-xl:      20px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
+            font-family: "Manrope", "Segoe UI", sans-serif;
+            color: var(--ca-ink);
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 10% 15%, rgba(111, 77, 255, 0.13) 0%, transparent 28%),
+                radial-gradient(circle at 90% 10%, rgba(111, 77, 255, 0.08) 0%, transparent 24%),
+                linear-gradient(180deg, #f5f3ff 0%, #faf9ff 50%, #ffffff 100%);
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            grid-template-areas: "nav" "main" "footer";
+        }
+
+        /* ── NAVBAR ───────────────────── */
+        .navbar {
+            grid-area: nav;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
+            justify-content: space-between;
+            padding: 16px clamp(20px, 4vw, 48px);
+            border-bottom: 1px solid var(--ca-border);
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
-        .container {
+
+        .brand img {
+            height: 28px;
+            width: auto;
+            display: block;
+        }
+
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ca-muted);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ca-purple);
+            box-shadow: 0 0 0 4px rgba(111, 77, 255, 0.18);
+            animation: pulse 2s ease-in-out infinite;
+            flex-shrink: 0;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 2px;
+            background: var(--ca-purple-soft);
+            padding: 3px;
+            border-radius: 8px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--ca-muted);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.18s ease, color 0.18s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .lang-btn:hover { color: var(--ca-purple); }
+
+        .lang-btn.active {
+            background: var(--ca-white);
+            color: var(--ca-purple);
+            box-shadow: 0 1px 6px rgba(111, 77, 255, 0.12);
+        }
+
+        .lang-btn:focus-visible {
+            outline: 2px solid var(--ca-purple);
+            outline-offset: 2px;
+        }
+
+        /* ── MAIN ─────────────────────── */
+        .main {
+            grid-area: main;
+            display: grid;
+            place-items: center;
+            padding: clamp(36px, 5vw, 72px) clamp(20px, 4vw, 48px);
+        }
+
+        .card {
+            width: min(600px, 100%);
+            background: var(--ca-white);
+            border: 1px solid var(--ca-border);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--ca-shadow);
+            padding: clamp(32px, 5vw, 52px);
             text-align: center;
+            animation: page-enter 0.5s ease both;
         }
+
+        .card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: var(--ca-purple-soft);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
+        }
+
+        .card-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--ca-purple);
+        }
+
         h1 {
-            color: #333;
+            font-size: clamp(24px, 4vw, 34px);
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            margin-bottom: 14px;
         }
-        p {
-            color: #666;
+
+        .lead {
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--ca-muted);
+            max-width: 50ch;
+            margin: 0 auto 24px;
         }
+
+        .eta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--ca-purple-soft);
+            padding: 9px 18px;
+            border-radius: 999px;
+            margin-bottom: 24px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ca-purple);
+        }
+
+        .eta-label {
+            font-weight: 500;
+            color: var(--ca-muted);
+            font-size: 13px;
+        }
+
+        .btn {
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 44px;
+            padding: 0 24px;
+            border-radius: 999px;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 700;
+            background: var(--ca-purple);
+            color: var(--ca-white);
+            box-shadow: 0 8px 20px rgba(111, 77, 255, 0.28);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .btn:hover, .btn:focus-visible {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 28px rgba(111, 77, 255, 0.36);
+        }
+
+        .btn:focus-visible {
+            outline: 2px solid var(--ca-purple);
+            outline-offset: 3px;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid var(--ca-border);
+            margin: 28px 0;
+        }
+
+        .impact-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            color: var(--ca-muted);
+            margin-bottom: 12px;
+        }
+
+        .impact-list {
+            list-style: none;
+            display: grid;
+            gap: 9px;
+            text-align: left;
+        }
+
+        .impact-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--ca-muted);
+            line-height: 1.55;
+        }
+
+        .impact-list li::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--ca-purple);
+            margin-top: 7px;
+            flex-shrink: 0;
+            opacity: 0.45;
+        }
+
+        /* Lang panels: hide all, show .active */
+        .lang-panel          { display: none; }
+        .lang-panel.active   { display: contents; }
+
+        /* ── FOOTER ───────────────────── */
+        .footer {
+            grid-area: footer;
+            text-align: center;
+            padding: 18px clamp(20px, 4vw, 48px);
+            font-size: 13px;
+            color: var(--ca-muted);
+            border-top: 1px solid var(--ca-border);
+        }
+
+        .footer a {
+            color: var(--ca-purple);
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .footer a:focus-visible {
+            outline: 2px solid var(--ca-purple);
+            outline-offset: 2px;
+        }
+
+        /* ── ANIMATIONS ───────────────── */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.3); }
+        }
+
+        @keyframes page-enter {
+            from { opacity: 0; transform: translateY(12px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── RESPONSIVE ───────────────── */
+        @media (max-width: 480px) {
+            .status-pill { display: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CodeAny Technical Service Closure</h1>
-        <p><strong>English:</strong> We apologize for the inconvenience, but our technical services are currently unavailable due to maintenance. We are working hard finish as soon as possible. Please check back later for updates. Thank you for your patience. Services will resume on Tuesday.</p>
-        <p><strong>Russian:</strong> Приносим извинения за неудобства, но наши технические услуги в настоящее время недоступны из-за технического обслуживания. Мы работаем над тем чтобы сайт открылся как можно скорее. Пожалуйста, проверьте позже для обновлений. Благодарим вас за ваше терпение. Услуги возобновятся во вторник.</p>
-        <p><strong>Azerbaijani:</strong> Narahatçılığa görə üzr istəyirik, lakin texniki xidmətlərimiz texniki xidmət görə hazırda mövcud deyil. Biz bərk çalışırıq. Yeniləmələr üçün sonra yenidən yoxlayın. Səbr etdiyiniz üçün təşəkkürlər. Xidmətlər çərşənbə axşamı bərpa olunacaq. </p>
-    </div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" aria-label="Site navigation">
+        <a class="brand" href="https://codeany.org" aria-label="CodeAny">
+            <img src="https://cdn.codeany.org/file/codeany-files/static/main/img/codeAnyLogo.svg" alt="CodeAny">
+        </a>
+
+        <div class="status-pill" aria-live="polite">
+            <span class="status-dot" aria-hidden="true"></span>
+            <span id="nav-status">Texniki xidmət</span>
+        </div>
+
+        <div class="lang-switch" role="tablist" aria-label="Dil seçin">
+            <button class="lang-btn active" data-lang="az" id="tab-az" role="tab" aria-controls="panel-az" aria-selected="true"  type="button">AZ</button>
+            <button class="lang-btn"        data-lang="en" id="tab-en" role="tab" aria-controls="panel-en" aria-selected="false" type="button">EN</button>
+            <button class="lang-btn"        data-lang="ru" id="tab-ru" role="tab" aria-controls="panel-ru" aria-selected="false" type="button">RU</button>
+        </div>
+    </nav>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <div class="card">
+
+            <!-- wrench icon -->
+            <div class="card-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+            </div>
+
+            <!-- AZERBAIJANI (default) -->
+            <div class="lang-panel active" id="panel-az" role="tabpanel" aria-labelledby="tab-az">
+                <h1>Texniki xidmət baş verir</h1>
+                <p class="lead">Narahatçılığa görə üzr istəyirik. Platformamız hazırda təcili texniki baxış səbəbilə əlçatmazdır. Komandamız onu mümkün qədər tez bərpa etmək üçün işləyir.</p>
+                <div class="eta"><span class="eta-label">Bərpa tarixi:</span>Cümə</div><br>
+                <a class="btn" href="https://support.codeany.org/">Dəstək Mərkəzi</a>
+                <hr class="divider">
+                <p class="impact-title">Nələr təsirlənib?</p>
+                <ul class="impact-list">
+                    <li>Bəzi texniki xidmətlər və funksiyalar müvəqqəti olaraq əlçatmaz ola bilər.</li>
+                    <li>Hesabınız və məlumatlarınız bu müddət ərzində tam təhlükəsizdir.</li>
+                    <li>Giriş bərpa olunduqda sizə heç bir fəaliyyət tələb olunmayacaq.</li>
+                </ul>
+            </div>
+
+            <!-- ENGLISH -->
+            <div class="lang-panel" id="panel-en" role="tabpanel" aria-labelledby="tab-en" hidden>
+                <h1>Technical services temporarily unavailable</h1>
+                <p class="lead">We apologize for the inconvenience. Our platform is currently down for urgent maintenance. Our team is working hard to restore it as soon as possible.</p>
+                <div class="eta"><span class="eta-label">Expected recovery:</span>Friday</div><br>
+                <a class="btn" href="https://support.codeany.org/">Support Center</a>
+                <hr class="divider">
+                <p class="impact-title">What this affects</p>
+                <ul class="impact-list">
+                    <li>Some technical services and platform features may be temporarily inaccessible.</li>
+                    <li>Your existing account and data remain completely safe.</li>
+                    <li>No action is required from you — access will be restored automatically.</li>
+                </ul>
+            </div>
+
+            <!-- RUSSIAN -->
+            <div class="lang-panel" id="panel-ru" role="tabpanel" aria-labelledby="tab-ru" hidden>
+                <h1>Технические сервисы временно недоступны</h1>
+                <p class="lead">Приносим извинения за неудобства. Наша платформа временно недоступна в связи со срочным техническим обслуживанием. Команда активно работает над восстановлением.</p>
+                <div class="eta"><span class="eta-label">Ожидаемое восстановление:</span>Пятница</div><br>
+                <a class="btn" href="https://support.codeany.org/">Центр поддержки</a>
+                <hr class="divider">
+                <p class="impact-title">Что затронуто?</p>
+                <ul class="impact-list">
+                    <li>Некоторые сервисы и функции платформы могут быть временно недоступны.</li>
+                    <li>Ваш аккаунт и данные в полной безопасности.</li>
+                    <li>Никаких действий не требуется — доступ восстановится автоматически.</li>
+                </ul>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <span id="footer-contact">Təcili yardım üçün: <a href="mailto:support@codeany.org">support@codeany.org</a></span>
+    </footer>
+
+    <script>
+        const i18n = {
+            az: {
+                htmlLang:   'az',
+                pageTitle:  'CodeAny — Texniki Xidmət',
+                navStatus:  'Texniki xidmət',
+                footer:     'Təcili yardım üçün: <a href="mailto:support@codeany.org">support@codeany.org</a>'
+            },
+            en: {
+                htmlLang:   'en',
+                pageTitle:  'CodeAny — Service Maintenance',
+                navStatus:  'Maintenance in progress',
+                footer:     'Need urgent help? <a href="mailto:support@codeany.org">support@codeany.org</a>'
+            },
+            ru: {
+                htmlLang:   'ru',
+                pageTitle:  'CodeAny — Техническое обслуживание',
+                navStatus:  'Техническое обслуживание',
+                footer:     'Срочная помощь: <a href="mailto:support@codeany.org">support@codeany.org</a>'
+            }
+        };
+
+        const tabs   = Array.from(document.querySelectorAll('.lang-btn'));
+        const panels = Array.from(document.querySelectorAll('.lang-panel'));
+
+        function switchLang(lang) {
+            const t = i18n[lang];
+            if (!t) return;
+
+            document.documentElement.lang            = t.htmlLang;
+            document.title                           = t.pageTitle;
+            document.getElementById('nav-status').textContent   = t.navStatus;
+            document.getElementById('footer-contact').innerHTML = t.footer;
+
+            tabs.forEach(btn => {
+                const active = btn.dataset.lang === lang;
+                btn.classList.toggle('active', active);
+                btn.setAttribute('aria-selected', String(active));
+            });
+
+            panels.forEach(panel => {
+                const active = panel.id === `panel-${lang}`;
+                panel.classList.toggle('active', active);
+                panel.hidden = !active;
+            });
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => switchLang(tab.dataset.lang));
+
+            tab.addEventListener('keydown', e => {
+                if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+                e.preventDefault();
+                const idx  = tabs.indexOf(tab);
+                const next = (idx + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length;
+                tabs[next].focus();
+                switchLang(tabs[next].dataset.lang);
+            });
+        });
+    </script>
 </body>
 </html>
