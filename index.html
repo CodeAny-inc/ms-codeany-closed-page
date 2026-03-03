@@ -426,7 +426,7 @@
                         onu mümkün qədər tez bərpa etmək üçün işləyir.
                     </p>
                     <div class="eta">
-                        <span class="eta-label">Bərpa tarixi:</span>Bazar günü
+                        <span class="eta-label">Bərpa tarixi:</span>Çərşənbə axşamı
                     </div>
                     <br />
                     <a class="btn" href="https://support.codeany.org/"
@@ -465,7 +465,7 @@
                         working hard to restore it as soon as possible.
                     </p>
                     <div class="eta">
-                        <span class="eta-label">Expected recovery:</span>Sunday
+                        <span class="eta-label">Expected recovery:</span>Tuesday
                     </div>
                     <br />
                     <a class="btn" href="https://support.codeany.org/"
@@ -506,7 +506,7 @@
                     </p>
                     <div class="eta">
                         <span class="eta-label">Ожидаемое восстановление:</span
-                        >Воскересенье
+                        >Вторник
                     </div>
                     <br />
                     <a class="btn" href="https://support.codeany.org/"
@@ -540,70 +540,3 @@
         </footer>
 
         <script>
-            const i18n = {
-                az: {
-                    htmlLang: "az",
-                    pageTitle: "CodeAny — Texniki Xidmət",
-                    navStatus: "Texniki xidmət",
-                    footer: 'Təcili yardım üçün: <a href="mailto:support@codeany.org">support@codeany.org</a>',
-                },
-                en: {
-                    htmlLang: "en",
-                    pageTitle: "CodeAny — Service Maintenance",
-                    navStatus: "Maintenance in progress",
-                    footer: 'Need urgent help? <a href="mailto:support@codeany.org">support@codeany.org</a>',
-                },
-                ru: {
-                    htmlLang: "ru",
-                    pageTitle: "CodeAny — Техническое обслуживание",
-                    navStatus: "Техническое обслуживание",
-                    footer: 'Срочная помощь: <a href="mailto:support@codeany.org">support@codeany.org</a>',
-                },
-            };
-
-            const tabs = Array.from(document.querySelectorAll(".lang-btn"));
-            const panels = Array.from(document.querySelectorAll(".lang-panel"));
-
-            function switchLang(lang) {
-                const t = i18n[lang];
-                if (!t) return;
-
-                document.documentElement.lang = t.htmlLang;
-                document.title = t.pageTitle;
-                document.getElementById("nav-status").textContent = t.navStatus;
-                document.getElementById("footer-contact").innerHTML = t.footer;
-
-                tabs.forEach((btn) => {
-                    const active = btn.dataset.lang === lang;
-                    btn.classList.toggle("active", active);
-                    btn.setAttribute("aria-selected", String(active));
-                });
-
-                panels.forEach((panel) => {
-                    const active = panel.id === `panel-${lang}`;
-                    panel.classList.toggle("active", active);
-                    panel.hidden = !active;
-                });
-            }
-
-            tabs.forEach((tab) => {
-                tab.addEventListener("click", () =>
-                    switchLang(tab.dataset.lang),
-                );
-
-                tab.addEventListener("keydown", (e) => {
-                    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
-                    e.preventDefault();
-                    const idx = tabs.indexOf(tab);
-                    const next =
-                        (idx +
-                            (e.key === "ArrowRight" ? 1 : -1) +
-                            tabs.length) %
-                        tabs.length;
-                    tabs[next].focus();
-                    switchLang(tabs[next].dataset.lang);
-                });
-            });
-        </script>
-    </body>
-</html>
